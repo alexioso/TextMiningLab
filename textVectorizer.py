@@ -16,8 +16,8 @@ def main():
 
 	documents = []
 	labels = []
+	print("Reading test data...")
 	for name in test:
-		print(name)
 		dir_name = root_dir + "/C50test/" + name
 		files = os.listdir(dir_name)
 
@@ -28,8 +28,9 @@ def main():
 				documents.append(document.lower().replace("[^A-Za-z\s]", "").split()) 
 				labels.append(name)
 
+	print("Reading train data...")
 	for name in train:
-		print(name)
+
 		dir_name = root_dir + "/C50train/" + name
 		files = os.listdir(dir_name)
 
@@ -40,16 +41,13 @@ def main():
 				documents.append(document) 
 				labels.append(name)
 
-
-	print("1")
+	
 	texts = pd.DataFrame({"text":documents, "label":labels},index = range(len(documents)))
-	print("2")
 
 	bag_of_words = texts.loc[:,"text"].apply(Counter)
-	print("3")
+
 	print(bag_of_words.head())
-	tf = pd.DataFrame(list(bag_of_words))
-	print(tf.head())
+	
 	
 
 
