@@ -58,6 +58,8 @@ def main():
 					if(stopWord != None and word in stopWord):
 						continue
 					word = word.replace("'", "")
+					if(word == ""):
+						continue
 					if(porter == True):
 						word = ps.stem(word, 0, len(word) - 1)
 					if(word not in hitWords):
@@ -94,6 +96,8 @@ def main():
 					if(stopWord != None and word in stopWord):
 						continue
 					word = word.replace("'", "")
+					if(word == ""):
+						continue
 					if(porter == True):
 						word = ps.stem(word, 0, len(word) - 1)
 					if(word not in hitWords):
