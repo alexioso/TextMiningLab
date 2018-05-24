@@ -17,7 +17,7 @@ def calcNormal(firstSet, secondSet, m1, m2, first, second):
 	return 1 - m3/bottom
 
 
-#run as py clusteringAuthorship.py plainVector.csv tfidfVector.csv
+#run as py distMatCalculation.py plainVector.csv tfidfVector.csv
 
 filePlain = open(sys.argv[1], "r")
 fileTfidf = open(sys.argv[2], "r")
@@ -85,4 +85,3 @@ for i in range(4999):
 		z += 1
 
 np.savetxt("plainDistMat.txt", distMatPlain)
-
