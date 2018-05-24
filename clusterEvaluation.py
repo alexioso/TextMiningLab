@@ -36,30 +36,43 @@ for line in lines:
 clusters = []
 clusters.append((root.attrib["height"], root))
 
-while(len(clusters) < 50):
+while(len(clusters) < 62):
 	sortedThings = sorted(clusters, key=lambda tup:tup[0], reverse=True)
-	bestIndex = -1
-	for i in range(len(sortedThings)):
-		children = []
+	#bestIndex = -1
+	flag = False
+	i = 0
+	curLen = len(sortedThings)
+	while i < curLen and flag == False:
 		for child in sortedThings[i][1]:
-			if(child.tag != "leaf"):
-				children.append(child)
-		numList = []
-		for a in children:
-			tempThing = []
-			recurse(a, tempThing)
-			numList.append(len(tempThing))
-		flag = True
-		for a in numList:
-			if a < 30:
-				flag = False
-		if flag:
-			bestIndex = i
-			break
-	temp = sortedThings.pop(i)
-	for child in temp[1]:
-		if(child.tag != "leaf"):
-			sortedThings.append((child.attrib["height"], child))
+			if child.tag != "leaf":
+				tempList = []
+				recurse(child, tempList)
+				if len(tempList) > 43:
+					flag = True
+					sortedThings.append((child.attrib["height"], child))
+		if flag == True:
+			del sortedThings[i]
+		i += 1
+	#for i in range(len(sortedThings)):
+	#	children = []
+	#	for child in sortedThings[i][1]:
+	#		if(child.tag != "leaf"):
+	#			children.append(child)
+	#	numList = []
+	#	for a in children:
+	#		tempThing = []
+	##		numList.append(len(tempThing))
+	#	flag = True
+	#	for a in numList:
+	#		if a < 30:
+	#			flag = False
+	#	if flag:
+	#		bestIndex = i
+	#		break
+	#temp = sortedThings.pop(i)
+	#for child in temp[1]:
+	#	if(child.tag != "leaf"):
+	#		sortedThings.append((child.attrib["height"], child))
 	clusters = sortedThings
 
 realCluster = []
@@ -67,6 +80,7 @@ for node in clusters:
 	tempList = []
 	recurse(node[1], tempList)
 	realCluster.append(tempList)
+	print(len(tempList))
 
 #expected is row, actual is column
 matrix = np.zeros((50, 50))
