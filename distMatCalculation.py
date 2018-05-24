@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from lxml import etree as ET
+import math
 
 class Vector:
 	def __init__(self, fileName, authorName):
