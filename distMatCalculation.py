@@ -14,8 +14,17 @@ def calcNormal(firstSet, secondSet, m1, m2, first, second):
 	fin = list(firstSet.intersection(secondSet))
 	for t in fin:
 		m3 += first[t] * second[t]
-	return 1 - m3/bottom
+	return m3/bottom
 
+def calcOkapi(first, second, avg, bytesInDoc, docFreq, k1, b, k2, vect1, vect2):
+	ans = 0
+	fin = first.intersection(second)
+	for t in fin:
+		ob1 = math.log((5000 - overallDoc[t] + 0.5)/(0.5 + overallDoc[t]))
+		ob2 = ((k1 + 1)*vect1[t])/(k1*(1-b+b*bytesInDoc/avgBytes)+vect1[t])
+		ob3 = ((k2+1)*vect2[t])/(k2+vect2[t])
+		ans += ob1*ob2*ob3
+	return ans
 
 #run as py distMatCalculation.py plainVector.csv tfidfVector.csv
 
@@ -79,9 +88,47 @@ for a in tfidfVect:
 
 for i in range(4999):
 	for j in range(i + 1, 5000):
-		distMatPlain[i][j] = calcNormal(setSet[i], setSet[j], mSet[i], mSet[j], tfidfVect[i].vector, tfidfVect[j].vector)
+		distMatTfidf[i][j] = calcNormal(setSet[i], setSet[j], mSet[i], mSet[j], tfidfVect[i].vector, tfidfVect[j].vector)
 		if(z % 100000 == 0):
 			print(z)
 		z += 1
 
-np.savetxt("plainDistMat.txt", distMatPlain)
+np.savetxt("plainDistMat.txt", distMatTfidf)
+
+bytesInDoc = []
+avgBytes = 0
+overallDoc = {}
+
+for q in plainVect:
+	docBytes = 0
+	thisVectDict = q.vector
+	thisList = []
+	for k in thisVectDict.keys():
+		avgBytes += len(k) * thisVectDict[k]
+		docBytes += len(k) * thisVectDict[k]
+		if k not in thisList:
+			if k not in overallDoc:
+				overallDoc[k] = 1
+			else:
+				overallDoc[k] += 1
+			thisList.append(k)
+	bytesInDoc.append(docBytes)
+
+avgBytes /= 5000
+
+k1 = 1
+b = 0.75
+k2 = 1
+
+setSet2 = []
+for a in plainVect:
+	setSet2.append(set(a.vector.keys()))
+z = 0
+for i in range(4999):
+	for j in range(i + 1, 5000):
+		distMatPlain[i][j] = calcOkapi(setSet2[i], setSet2[j], avgBytes, bytesInDoc[i], overallDoc, k1, b, k2, plainVect[i].vector, plainVect[j].vector)
+		if(z % 100000 == 0):
+			print(z)
+		z += 1
+
+np.savetxt("okapiDistMat.txt", distMatPlain)
