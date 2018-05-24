@@ -1,0 +1,28 @@
+<tree height="0.9824">
+  <node height="0.9683">
+    <node height="0.9121">
+      <leaf height="0" data="421829newsML.txt"/>
+      <node height="0.5918">
+        <leaf height="0" data="43033newsML.txt"/>
+        <node height="0.1890">
+          <leaf height="0" data="450383newsML.txt"/>
+          <leaf height="0" data="450788newsML.txt"/>
+        </node>
+      </node>
+    </node>
+    <node height="0.9512">
+      <node height="0.8867">
+        <leaf height="0" data="424074newsML.txt"/>
+        <leaf height="0" data="436774newsML.txt"/>
+      </node>
+      <node height="0.8174">
+        <leaf height="0" data="439561newsML.txt"/>
+        <leaf height="0" data="466275newsML.txt"/>
+      </node>
+    </node>
+  </node>
+  <node height="0.7207">
+    <leaf height="0" data="42764newsML.txt"/>
+    <leaf height="0" data="433558newsML.txt"/>
+  </node>
+</tree>
