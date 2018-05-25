@@ -8,6 +8,7 @@ def main():
 
     if len(sys.argv) != 3:
         print("Usage: python classifierEvaluation.py <predictions.txt> <groundTruth.csv>")
+        sys.exit(1)
 
     predictionsPath = sys.argv[1]
     groundTruthPath = sys.argv[2]
